@@ -12,7 +12,7 @@
   - https://github.com/hrr49-tully/Guitar-Centaur-Add-to-Cart
   - https://github.com/hrr49-tully/Guitar-Centaur-Add-to-Cart-proxy
 
-## CRUD
+## CRUD API
 
 Action | Method | URL
 -------|--------|-----
