@@ -12,6 +12,15 @@
   - https://github.com/hrr49-tully/Guitar-Centaur-Add-to-Cart
   - https://github.com/hrr49-tully/Guitar-Centaur-Add-to-Cart-proxy
 
+## CRUD API
+
+Action | Method | URL
+-------|--------|-----
+Create a new product | POST | /api/products/:item_id
+Get related products information | GET | /api/related/getrelatedpurchases/:item_id
+Update product information | PUT | /api/products/:item_id
+Delete a product | DELETE | /api/products/:item_id
+
 ## Development
 
 ### Installing Dependencies
