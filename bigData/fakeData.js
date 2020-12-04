@@ -53,8 +53,6 @@ for (let i = 0; i < 100; i++) {
   categories.push(faker.commerce.department());
 }
 
-console.log(categories);
-
 module.exports = {
   titles,
   descriptions,

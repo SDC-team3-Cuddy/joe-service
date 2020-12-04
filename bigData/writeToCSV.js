@@ -9,7 +9,7 @@ console.time();
 
 // --------------------------- WRITE PRODUCTS --------------------------- //
 
-const numProducts = 100;
+const numProducts = 10000000;
 const productsFilePath = path.join(__dirname, '/products.csv');
 const productsStream = fs.createWriteStream(productsFilePath, {flags: 'a'});
 

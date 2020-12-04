@@ -7,12 +7,20 @@ const writeCSV = (writeStream, lines, func, encoding, done) => {
       const csv = func(i, lines);
       i--;
       // Once i is 0, we finish writing.
-      if (i === 0) writeStream.write(csv, encoding, done);
-      else canWrite = writeStream.write(csv, encoding);
+      if (i === 0) {
+        writeStream.write(csv, encoding, done);
+      }
+      else {
+        canWrite = writeStream.write(csv, encoding);
+      }
     } while (i > 0 && canWrite);
 
     // If buffer is full, wait until it has drained and continue writing.
-    if (i > 0 && !canWrite) { writeStream.once('drain', write); }
+    if (i > 0 && !canWrite) {
+      if (i % 10000 === 0)
+      console.log('drained!', i);
+      writeStream.once('drain', write);
+    }
   };
   write();
 };
