@@ -1,18 +1,81 @@
 const express = require('express');
 const app = express();
-const path = require('path');
-const db = require('./database.js');
+const { getRelatedProducts, postProduct, updateProduct, deleteProduct } = require('./db/models.js');
+// const path = require('path');
+// const db = require('./database.js');
 const conn = require('../connection.js');
-
-const request = require('request');
+// const request = require('request');
 
 app.use(express.static(__dirname + '/../public'));
 
-// pipes bundle hosted on s3 back
-app.get('/bundle.js', (req, res) => {
-  const url = `${conn.awsUrl}bundle.js`;
-  request.get(url).pipe(res);
+app.use(express.json());
+
+// Get all related products for a given product id
+app.get('/api/related/getrelatedpurchases/:item_id', async (req, res) => {
+  try {
+    let relatedProducts = await getRelatedProducts(req.params.id);
+    res.status(200).send(relatedProducts.rows);
+  } catch (error) {
+    console.log(error);
+    res.status(404).send(error);
+  }
 });
+
+// Post a product
+app.post('/api/related/products', async (req, res) => {
+  const p = req.body;
+  const params = [p.title, p.description, p.price, p.image_url, p.overview, p.specifications, p.coverage, p.ratings_count, p.ratings_average];
+
+  try {
+    let productPosted = await getRelatedProducts(params);
+    res.status(200).send(productPosted);
+  } catch (error) {
+    console.log(error);
+    res.status(404).send(error);
+  }
+});
+
+// Update a product
+app.put('/api/related/products/:id', async (req, res) => {
+  const params = [req.body.ratings_average, req.params.id];
+  try {
+    let updatedRating = await getRelatedProducts(params);
+    res.status(200).send(updatedRating);
+  } catch (error) {
+    console.log(error);
+    res.status(404).send(error);
+  }
+});
+
+// Delete a product
+app.delete('/api/related/products/:id', async (req, res) => {
+  try {
+    let deletedProduct = await getRelatedProducts(req.params.id);
+    res.status(200).send(deletedProduct);
+  } catch (error) {
+    console.log(error);
+    res.status(404).send(error);
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// pipes bundle hosted on s3 back
+// app.get('/bundle.js', (req, res) => {
+//   const url = `${conn.awsUrl}bundle.js`;
+//   request.get(url).pipe(res);
+// });
 
 /* Shouldn't be used in local testing proxy */
 // app.get('/:item_id', (req, res) => {
@@ -154,6 +217,4 @@ app.get('/api/related/getratingcount/:item_id', (req, res) => {
 //   }
 // });
 
-app.listen(conn.port, () => {
-  console.log(`App listening on ${conn.port}`)
-});
+app.listen(conn.port, () => { console.log(`App listening on ${conn.port}...`) });

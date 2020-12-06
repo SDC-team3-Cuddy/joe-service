@@ -3,3 +3,4 @@ package-lock.json
 /node_modules/
 /bigData/products.csv
 /bigData/related_products.csv
+/bigData/mongoProducts.csv

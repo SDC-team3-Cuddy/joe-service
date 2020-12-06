@@ -2,11 +2,12 @@ const path = require('path');
 const fs = require('fs');
 
 const { writeCSV } = require('./writeStream.js');
-const { insertProduct, insertRelatedProducts } = require('./generateBigData.js');
+const { insertProduct, insertRelatedProducts, insertMongoProduct } = require('./generateBigData.js');
 
 console.log('Starting to write information to CSV files...');
 console.time();
 
+/*
 // --------------------------- WRITE PRODUCTS --------------------------- //
 
 const numProducts = 10000000;
@@ -36,3 +37,34 @@ writeCSV(relatedStream, numProducts, insertRelatedProducts, 'utf-8', () => {
   console.timeEnd();
   relatedStream.end();
 });
+*/
+
+// --------------------------- WRITE MONGO PRODUCTS --------------------------- //
+
+console.log('Starting to write Mongo CSV file...');
+console.time();
+
+const numProducts = 10000000;
+const productsFilePath = path.join(__dirname, '/mongoProducts.csv');
+const productsStream = fs.createWriteStream(productsFilePath);
+
+// Columns
+const productColumns = 'productId,title,description,price,imageUrl,overview,specifications,coverage,ratingsCount,ratingsAverage,relatedProducts\n';
+productsStream.write(productColumns, 'utf-8');
+
+// Data
+writeCSV(productsStream, numProducts, insertMongoProduct, 'utf-8', () => {
+  console.timeEnd();
+  console.log('Finished writing to Mongo CSV file!');
+  productsStream.end();
+});
+
+/*
+
+[1, 3, 5, 7, 9]
+[2, 4, 6, 8, 10, 12]
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12]
+
+
+
+*/
