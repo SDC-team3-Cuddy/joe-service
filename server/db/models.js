@@ -1,6 +1,7 @@
-const { pool } = require('./index.js');
+const { pg } = require('./index.js');
 
 const getRelatedProducts = async (id) => {
+  console.log('inside getRelated Products------')
   const query = `
     SELECT
     p.title,
@@ -21,7 +22,7 @@ const getRelatedProducts = async (id) => {
   let relatedProducts;
 
   try {
-    relatedProducts = await pool.query(query, [id]);
+    relatedProducts = await pg.query(query, [id]);
   } catch (error) {
     console.log(error);
     throw (error);
@@ -36,7 +37,7 @@ const postProduct = async (params) => {
   let posted;
 
   try {
-    posted = await pool.query(query, params);
+    posted = await pg.query(query, params);
   } catch (error) {
     console.log(error);
     throw (error);
@@ -45,28 +46,36 @@ const postProduct = async (params) => {
   return posted;
 };
 
-const updateProduct = async (params) => {
-  const query = 'UPDATE products SET ratings_average = $1 WHERE id = $2';
-  let updated;
-  try {
-    updated = await pool.query(query, params);
-  } catch (error) {
-    console.log(error);
-    throw (error);
-  }
-  return updated;
+const updateProduct = async (updatedAvgRating, id) => {
+  return pg('products')
+  .where('id', id)
+  .update({
+    ratings_average: updatedAvgRating
+  });
+  // const query = 'UPDATE products SET ratings_average = $1 WHERE id = $2';
+  // let updated;
+  // try {
+  //   updated = await pg.query(query, params);
+  // } catch (error) {
+  //   console.log(error);
+  //   throw (error);
+  // }
+  // return updated;
 };
 
-const deleteProduct = (id) => {
-  const query = 'DELETE FROM products WHERE id = $1';
-  let deleted;
-  try {
-    deleted = await pool.query(query, [id])
-  } catch (error) {
-    console.log(error);
-    throw (error);
-  }
-  return deleted;
+const deleteProduct = async (id) => {
+  return pg('products')
+  .where('id', id)
+  .del();
+  // const query = 'DELETE FROM products WHERE id = $1';
+  // let deleted;
+  // try {
+  //   deleted = await pg.query(query, [id])
+  // } catch (error) {
+  //   console.log(error);
+  //   throw (error);
+  // }
+  // return deleted;
 };
 
 module.exports = {

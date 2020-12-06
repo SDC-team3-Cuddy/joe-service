@@ -1,25 +1,14 @@
-const { Pool } = require('pg');
-
-const config = {
-  host: 'localhost',
-  user: 'hrstudent',
-  password: '1234',
-  database: 'rpmodule',
-  // max: 20,
-  // idleTimeoutMillis: 30000,
-  // connectionTimeoutMillis: 2000,
-};
-
-const pool = new Pool(config);
-
-pool.on('error', (err) => {
-  console.error('Unexpected error on idle client', err);
-  process.exit(-1);
+var pg = require('knex')({
+  client: 'pg',
+  connection: {
+    host: 'localhost',
+    user: 'hrstudent',
+    password: '1234',
+    database: 'rpmodule'
+  }
 });
 
-module.exports = {
-  pool,
-};
+module.exports = { pg };
 
 
 /*

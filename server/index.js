@@ -14,10 +14,10 @@ app.use(express.json());
 app.get('/api/related/getrelatedpurchases/:item_id', async (req, res) => {
   try {
     let relatedProducts = await getRelatedProducts(req.params.id);
-    res.status(200).send(relatedProducts.rows);
+    res.status(200).json(relatedProducts.rows);
   } catch (error) {
     console.log(error);
-    res.status(404).send(error);
+    res.status(404).json(error);
   }
 });
 
@@ -27,39 +27,37 @@ app.post('/api/related/products', async (req, res) => {
   const params = [p.title, p.description, p.price, p.image_url, p.overview, p.specifications, p.coverage, p.ratings_count, p.ratings_average];
 
   try {
-    let productPosted = await getRelatedProducts(params);
-    res.status(200).send(productPosted);
+    let productPosted = await postProduct(params);
+    res.status(200).json(productPosted);
   } catch (error) {
     console.log(error);
-    res.status(404).send(error);
+    res.status(404).json(error);
   }
 });
 
 // Update a product
 app.put('/api/related/products/:id', async (req, res) => {
-  const params = [req.body.ratings_average, req.params.id];
+  const rating = req.body.ratings_average;
+  const id = req.params.id;
   try {
-    let updatedRating = await getRelatedProducts(params);
-    res.status(200).send(updatedRating);
+    let updatedRating = await updateProduct(rating, id);
+    res.status(200).json(updatedRating);
   } catch (error) {
     console.log(error);
-    res.status(404).send(error);
+    res.status(404).json(error);
   }
 });
 
 // Delete a product
 app.delete('/api/related/products/:id', async (req, res) => {
   try {
-    let deletedProduct = await getRelatedProducts(req.params.id);
-    res.status(200).send(deletedProduct);
+    let deletedProduct = await deleteProduct(req.params.id);
+    res.status(200).json(deletedProduct);
   } catch (error) {
     console.log(error);
-    res.status(404).send(error);
+    res.status(404).json(error);
   }
 });
-
-
-
 
 
 

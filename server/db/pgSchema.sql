@@ -28,7 +28,10 @@ CREATE TABLE IF NOT EXISTS related_products(
 
 CREATE INDEX ON related_products (product_id);
 
-GRANT ALL PRIVILEGES ON DATABASE amazonreviews TO hrstudent;
+-- Will I need to create the user first in the script?
+GRANT CONNECT ON DATABASE rpmodule TO hrstudent;
+GRANT USAGE ON SCHEMA public TO my_user;
+GRANT ALL PRIVILEGES ON DATABASE rpmodule TO hrstudent;
 GRANT ALL ON ALL TABLES IN SCHEMA public TO hrstudent;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO hrstudent;
 
