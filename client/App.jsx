@@ -12,7 +12,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      id: 1,
+      id: 1234,
       relatedData: [],
       details: []
     }
@@ -22,7 +22,7 @@ class App extends React.Component {
 
     // initial
     this.getRelatedPurchases(this.state.id);
-    this.getDetails(this.state.id);
+    // this.getDetails(this.state.id);
   }
 
   componentDidMount() {
@@ -40,25 +40,25 @@ class App extends React.Component {
   handleItemChange(id) {
     this.setState({id: id});
     this.getRelatedPurchases(id);
-    this.getDetails(id);
+    // this.getDetails(id);
   }
 
   getRelatedPurchases(itemId) {
-    $.get(`/api/related/getrelatedpurchases/${itemId}`, (data) => {
+    $.get(`/api/related/products/${itemId}`, (data) => {
       this.setState({relatedData: data});
     });
   }
 
-  getDetails(itemId) {
-    $.get(`/api/related/getdetails/${itemId}`, (data) => {
-      this.setState({details: data[0]});
-    });
-  }
+  // getDetails(itemId) {
+  //   $.get(`/api/related/getdetails/${itemId}`, (data) => {
+  //     this.setState({details: data[0]});
+  //   });
+  // }
 
   render() {
     return (
       <div className={styles.body}>
-        <Details details={this.state.details}/>
+        {this.state.relatedData.length && <Details details={this.state.relatedData[0]}/>}
         <RelatedPurchases id={this.state.id} handleItemChange={this.handleItemChange} relatedData={this.state.relatedData}/>
       </div>
     );

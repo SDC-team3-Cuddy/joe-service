@@ -17,26 +17,25 @@ class Ratings extends React.Component {
       stars: []
     }
 
-    this.getStars = this.getStars.bind(this);
-    this.getStars();
-    this.getRatingCount = this.getRatingCount.bind(this);
-    this.getRatingCount();
+    // this.getStars = this.getStars.bind(this);
+    // this.getRatingCount = this.getRatingCount.bind(this);
+    // this.getRatingCount();
   }
 
-  getRatingCount() {
-    $.get(`/api/related/getratingcount/${this.props.id}`, (data) => {
-      this.setState({ratingCnt: Number(data[0].score)});
-    });
-  }
+  // getRatingCount() {
+  //   $.get(`/api/related/getratingcount/${this.props.id}`, (data) => {
+  //     this.setState({ratingCnt: Number(data[0].score)});
+  //   });
+  // }
 
-  getStars() {
-    $.get(`/api/related/getratingavg/${this.props.id}`, (data) => {
-      let starRating = Math.round(Number(data[0].score));
-      if (starRating > 5) {
-        starRating = 5;
-      } else if (starRating < 0) {
-        starRating = 0;
-      }
+  componentDidMount() {
+    // $.get(`/api/related/getratingavg/${this.props.id}`, (data) => {
+      let starRating = Math.round(Number(this.props.average));
+      // if (starRating > 5) {
+      //   starRating = 5;
+      // } else if (starRating < 0) {
+      //   starRating = 0;
+      // }
 
       let stars = [];
       for (let i = 0; i < 5; i++) {
@@ -48,14 +47,14 @@ class Ratings extends React.Component {
       }
 
       this.setState({stars: stars});
-    });
+    // });
   }
 
   render() {
     return (
       <div className={styles.ratings}>
         <div className={styles.ratingsAverage} data-testid="starAvg">{this.state.stars}</div>
-        <div className={styles.ratingsCount} data-testid="starCnt">({this.state.ratingCnt})</div>
+        <div className={styles.ratingsCount} data-testid="starCnt">({this.props.count})</div>
       </div>
     );
   }

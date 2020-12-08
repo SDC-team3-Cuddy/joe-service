@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require('express');
 const app = express();
 const { getRelatedProducts, postProduct, updateProduct, deleteProduct } = require('./db/models.js');
@@ -11,10 +12,11 @@ app.use(express.static(__dirname + '/../public'));
 app.use(express.json());
 
 // Get all related products for a given product id
-app.get('/api/related/getrelatedpurchases/:item_id', async (req, res) => {
+app.get('/api/related/products/:id', async (req, res) => {
+  console.log('get route accessed');
   try {
     let relatedProducts = await getRelatedProducts(req.params.id);
-    res.status(200).json(relatedProducts.rows);
+    res.status(200).json(relatedProducts);
   } catch (error) {
     console.log(error);
     res.status(404).json(error);
@@ -23,8 +25,8 @@ app.get('/api/related/getrelatedpurchases/:item_id', async (req, res) => {
 
 // Post a product
 app.post('/api/related/products', async (req, res) => {
-  const p = req.body;
-  const params = [p.title, p.description, p.price, p.image_url, p.overview, p.specifications, p.coverage, p.ratings_count, p.ratings_average];
+  const params = req.body;
+  // const params = [p.title, p.description, p.price, p.image_url, p.overview, p.specifications, p.coverage, p.ratings_count, p.ratings_average];
 
   try {
     let productPosted = await postProduct(params);
@@ -81,19 +83,20 @@ app.delete('/api/related/products/:id', async (req, res) => {
 // });
 
 // This request is made within App.jsx
-app.get('/api/related/getrelatedpurchases/:item_id', (req, res) => {
-  const id = req.params.item_id;
-  if (id) {
-    return db.getRelatedPurchases(id, (results) => {
-      res.status(200).send(results);
-    }, (error) => {
-      res.status(401).send(error);
-    });
-  } else {
-    res.status(401).send('Bad arguments');
-  }
-});
+// app.get('/api/related/getrelatedpurchases/:item_id', (req, res) => {
+//   const id = req.params.item_id;
+//   if (id) {
+//     return db.getRelatedPurchases(id, (results) => {
+//       res.status(200).send(results);
+//     }, (error) => {
+//       res.status(401).send(error);
+//     });
+//   } else {
+//     res.status(401).send('Bad arguments');
+//   }
+// });
 
+/*
 // This request is made within App.jsx
 app.get('/api/related/getdetails/:item_id', (req, res) => {
   const id = req.params.item_id;
@@ -214,5 +217,8 @@ app.get('/api/related/getratingcount/:item_id', (req, res) => {
 //     res.status(401).send('Bad arguments');
 //   }
 // });
+
+
+*/
 
 app.listen(conn.port, () => { console.log(`App listening on ${conn.port}...`) });

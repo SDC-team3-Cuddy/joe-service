@@ -7,7 +7,7 @@ const dbUser  = 'student';
 const dbPass  = 'password';
 const db      = 'rpmodule';
 
-const awsUrl = 'https://hrr49-fec-jw.s3.us-east-2.amazonaws.com/FEC/';
+const awsUrl = 'https://hr-sdc.s3.us-east-2.amazonaws.com/';
 
 const mysql = require('mysql');
 

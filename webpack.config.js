@@ -5,6 +5,7 @@ const output = path.join(__dirname, '/public');
 
 module.exports = {
   /*watch: true,*/
+  watch: true,
   entry: path.join(__dirname, 'client', 'index.jsx'),
   output: {
     filename: 'bundle.js',

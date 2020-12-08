@@ -9,6 +9,7 @@ class Details extends React.Component {
   }
 
   render() {
+    console.log('inside of Details component', this.props.details);
     return (
       <div className={styles.details}>
         <div className={styles.detailsRow}>
