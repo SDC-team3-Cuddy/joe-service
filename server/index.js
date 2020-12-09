@@ -13,7 +13,6 @@ app.use(express.json());
 
 // Get all related products for a given product id
 app.get('/api/related/products/:id', async (req, res) => {
-  console.log('get route accessed');
   try {
     let relatedProducts = await getRelatedProducts(req.params.id);
     res.status(200).json(relatedProducts);
