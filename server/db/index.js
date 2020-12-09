@@ -1,8 +1,8 @@
 var pg = require('knex')({
   client: 'pg',
   connection: {
-    host: '3.129.59.107', // change this to EC2 database instance address (instead of localhost 127.0.0.1)
-    port: 5432,
+    host: '3.129.59.107', // change this to EC2 database instance address (instead of localhost 127.0.0.1) 3.129.59.107
+    port: '5432',
     user: 'hrstudent',
     password: '1234',
     database: 'rpmodule'
