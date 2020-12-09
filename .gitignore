@@ -4,3 +4,7 @@ package-lock.json
 /bigData/products.csv
 /bigData/related_products.csv
 /bigData/mongoProducts.csv
+*.pem
+newrelic.js
+*.sh
+.env

@@ -22,15 +22,11 @@ CREATE TABLE IF NOT EXISTS related_products(
   related_id INT NOT NULL
 );
 
--- Understand what this will do before uncommenting:
--- CREATE INDEX product_id_idx
--- ON related_products(product_id);
-
 CREATE INDEX ON related_products (product_id);
 
 -- Will I need to create the user first in the script?
 GRANT CONNECT ON DATABASE rpmodule TO hrstudent;
-GRANT USAGE ON SCHEMA public TO my_user;
+GRANT USAGE ON SCHEMA public TO hrstudent;
 GRANT ALL PRIVILEGES ON DATABASE rpmodule TO hrstudent;
 GRANT ALL ON ALL TABLES IN SCHEMA public TO hrstudent;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO hrstudent;
@@ -50,3 +46,16 @@ CSV HEADER;
     to create the database and the tables from within the repo.
 */
 
+/*
+
+create user hrstudent with encrypted password '1234';
+grant all privileges on database rpmodule to hrstudent;
+
+
+COPY products(title, description, price, image_url, overview, specifications, coverage, ratings_count, ratings_average) FROM '/home/ubuntu/seeding/products.csv' DELIMITER ',' CSV HEADER;
+
+COPY related_products(product_id, related_id) FROM '/home/ubuntu/seeding/related_products.csv' DELIMITER ',' CSV HEADER;
+
+
+
+*/

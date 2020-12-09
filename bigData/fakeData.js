@@ -1,5 +1,4 @@
 const faker = require('faker');
-const conn = require('../connection.js');
 
 // Limits the number of calls to faker
 
@@ -17,10 +16,10 @@ const prices = [];
 for (let i = 0; i < 1000; i++) {
   prices.push(faker.commerce.price());
 }
-
+const awsUrl = 'https://hr-sdc.s3.us-east-2.amazonaws.com/';
 const image_urls = [];
 for (let i = 1; i <= 50; i++) {
-  image_urls.push(`${conn.awsUrl}images/${i}.jpg`);
+  image_urls.push(`${awsUrl}images/${i}.jpg`);
 }
 
 const overviews = [];

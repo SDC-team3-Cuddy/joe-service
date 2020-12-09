@@ -7,7 +7,7 @@ const { insertProduct, insertRelatedProducts, insertMongoProduct } = require('./
 console.log('Starting to write information to CSV files...');
 console.time();
 
-/*
+
 // --------------------------- WRITE PRODUCTS --------------------------- //
 
 const numProducts = 10000000;
@@ -37,8 +37,8 @@ writeCSV(relatedStream, numProducts, insertRelatedProducts, 'utf-8', () => {
   console.timeEnd();
   relatedStream.end();
 });
-*/
 
+/*
 // --------------------------- WRITE MONGO PRODUCTS --------------------------- //
 
 console.log('Starting to write Mongo CSV file...');
@@ -58,13 +58,5 @@ writeCSV(productsStream, numProducts, insertMongoProduct, 'utf-8', () => {
   console.log('Finished writing to Mongo CSV file!');
   productsStream.end();
 });
-
-/*
-
-[1, 3, 5, 7, 9]
-[2, 4, 6, 8, 10, 12]
-[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12]
-
-
 
 */

@@ -1,7 +1,8 @@
 var pg = require('knex')({
   client: 'pg',
   connection: {
-    host: 'localhost',
+    host: '3.129.59.107', // change this to EC2 database instance address (instead of localhost 127.0.0.1)
+    port: 5432,
     user: 'hrstudent',
     password: '1234',
     database: 'rpmodule'
@@ -9,6 +10,44 @@ var pg = require('knex')({
 });
 
 module.exports = { pg };
+
+/*
+
+// From Michael Chen:
+1. Create a PostgreSQL security group rule for port 5432 (should be in the dropdown menu!)
+2. In your DB instance, set password:
+sudo -u postgres psql
+postgres=#\password
+  (will be prompted for password)
+3. Edit pg_hba.conf AND postgresql.conf
+sudo vim /etc/postgresql/12/main/pg_hba.conf
+# Near bottom of file after local rules, add rule (allows remote access):
+host    all             all             0.0.0.0/0               md5
+sudo vim /etc/postgresql/12/main/postgresql.conf
+# Change line 59 to listen to external requests:
+listen_address='*'
+4. Restart postgres
+sudo /etc/init.d/postgresql restart
+5. Connect from private network!
+sudo psql -h PRIVATEIP -U postgres
+sudo psql -h 3.129.59.107 -U postgres
+
+
+Postgres is usually exposed on port :5432
+
+The queries will remain on your service
+
+Your EC2 has to be able to allow communication on a port
+
+Open up ports on EC2, and also open up Postgres settings
+
+Postgres has settings inside a config file that tell what can connect to it
+- By default, it's only 127.0.0.1
+- You'll have to get inside the config file and edit it so that anybody can connect to it(open all ports)
+
+rsync (or sftp, it's Secure File Transfer Protocol)
+- Basically drag and drop the files from one computer to another
+
 
 
 /*

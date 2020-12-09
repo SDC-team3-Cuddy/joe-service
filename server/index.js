@@ -1,4 +1,4 @@
-require('newrelic');
+// require('newrelic');
 const express = require('express');
 const app = express();
 const { getRelatedProducts, postProduct, updateProduct, deleteProduct } = require('./db/models.js');
