@@ -2,7 +2,7 @@ var pg = require('knex')({
   client: 'pg',
   connection: {
     host: '3.129.59.107', // change this to EC2 database instance address (instead of localhost 127.0.0.1) 3.129.59.107
-    port: '5432',
+    port: 5432,
     user: 'hrstudent',
     password: '1234',
     database: 'rpmodule'
@@ -12,6 +12,15 @@ var pg = require('knex')({
 module.exports = { pg };
 
 /*
+
+Step 1: See if you can connect your local service to your EC2 database instance
+
+
+
+
+
+
+
 
 // From Michael Chen:
 1. Create a PostgreSQL security group rule for port 5432 (should be in the dropdown menu!)
@@ -30,7 +39,7 @@ listen_address='*'
 sudo /etc/init.d/postgresql restart
 5. Connect from private network!
 sudo psql -h PRIVATEIP -U postgres
-sudo psql -h 3.129.59.107 -U postgres
+sudo psql -h 3.129.59.107 -d rpmodule -U hrstudent
 
 
 Postgres is usually exposed on port :5432
