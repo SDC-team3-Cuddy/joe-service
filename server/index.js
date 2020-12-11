@@ -9,6 +9,12 @@ const conn = require('../connection.js');
 
 app.use(express.static(__dirname + '/../public'));
 
+app.get('/loaderio-269429ae2e28e20c12b8c9349a6fad7a', function(req, res){
+  res.sendFile(__dirname + '/loaderio-269429ae2e28e20c12b8c9349a6fad7a.txt');
+});
+
+// app.use('/loaderio-269429ae2e28e20c12b8c9349a6fad7a', express.static(__dirname + '/loaderio-269429ae2e28e20c12b8c9349a6fad7a'));
+
 app.use(express.json());
 
 // Get all related products for a given product id
