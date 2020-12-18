@@ -4,7 +4,7 @@
     "phases": [
       {
         "duration": 60,
-        "arrivalRate": 1000
+        "arrivalRate": 100
       }
     ]
   },
@@ -14,20 +14,6 @@
         {
           "get": {
             "url": "/api/related/products/1234"
-          },
-          "post": {
-            "url": "/api/related/products",
-            "json": {
-              "title": "Test",
-              "description": "test test",
-              "price": "15.95",
-              "image_url": "https://zagerguitar.com/wp-content/uploads/2015/09/parlor-size-mahogany-1024x435.jpg",
-              "overview": "test test test",
-              "specifications": "test test",
-              "coverage": "test test",
-              "ratings_count": 42,
-              "ratings_average": 3.4
-            }
           }
         }
       ]

@@ -15,13 +15,6 @@ module.exports = { pg };
 
 Step 1: See if you can connect your local service to your EC2 database instance
 
-
-
-
-
-
-
-
 // From Michael Chen:
 1. Create a PostgreSQL security group rule for port 5432 (should be in the dropdown menu!)
 2. In your DB instance, set password:

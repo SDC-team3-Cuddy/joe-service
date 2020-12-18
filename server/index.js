@@ -1,4 +1,5 @@
 require('newrelic');
+// const compression = require('compression');
 const express = require('express');
 const app = express();
 const { getRelatedProducts, postProduct, updateProduct, deleteProduct } = require('./db/models.js');
@@ -15,16 +16,65 @@ app.get('/loaderio-16ad6118b51646aaeb269bf9694b6de9', function(req, res){
 
 app.use(express.json());
 
+// Compress all HTTP responses
+// app.use(compression());
+
+
+var redis = require('redis');
+var redisClient = redis.createClient({host : 'localhost', port : 6379});
+
+redisClient.on('ready',function() {
+ console.log("Redis is ready");
+});
+
+redisClient.on('error',function() {
+ console.log("Error in Redis");
+});
+
+// Caching middleware
+checkCache = (req, res, next) => {
+  const { id } = req.params;
+  console.log('cache middleware running');
+  redisClient.get(id, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send(err);
+    }
+
+    if (data !== null) {
+      console.log(`Redis cache worked for ${id} !`);
+      res.status(200).send(JSON.parse(data));
+    } else {
+      console.log(`${id} not in cache`);
+      next();
+    }
+  })
+}
+
+
+
 // Get all related products for a given product id
-app.get('/api/related/products/:id', async (req, res) => {
+app.get('/api/related/products/:id', checkCache, async (req, res) => {
+
   try {
     let relatedProducts = await getRelatedProducts(req.params.id);
+
+    // Set data to Redis
+    redisClient.set(req.params.id, JSON.stringify(relatedProducts));
+    console.log(`${req.params.id} set to Redis cache`);
+
     res.status(200).json(relatedProducts);
   } catch (error) {
     console.log(error);
     res.status(404).json(error);
   }
 });
+
+
+
+
+
+
 
 // Post a product
 app.post('/api/related/products', async (req, res) => {
