@@ -8,7 +8,7 @@ console.log('Starting to write information to CSV files...');
 console.time();
 
 
-// --------------------------- Write 'products' table for Postgres --------------------------- //
+// --------------------------- Write CSV file for 'products' table for Postgres --------------------------- //
 
 const numProducts = 10000000;
 const productsFilePath = path.join(__dirname, '/products.csv');
@@ -22,7 +22,7 @@ productsStream.write(productColumns, 'utf-8');
 writeCSV(productsStream, numProducts, insertProduct, 'utf-8', () => { productsStream.end(); });
 
 
-// ----------------------- Write 'related products' table for Postgres ---------------------- //
+// ----------------------- Write CSV file for 'related products' table for Postgres ---------------------- //
 
 const relatedFilePath = path.join(__dirname, '/related_products.csv');
 const relatedStream = fs.createWriteStream(relatedFilePath, {flags: 'a'});
@@ -39,7 +39,7 @@ writeCSV(relatedStream, numProducts, insertRelatedProducts, 'utf-8', () => {
 });
 
 /*
-// --------------------------- Write products for MongoDB --------------------------- //
+// --------------------------- Write CSV file for 'products' for MongoDB --------------------------- //
 
 console.log('Starting to write Mongo CSV file...');
 console.time();
